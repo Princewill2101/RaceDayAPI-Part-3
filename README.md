@@ -11,7 +11,8 @@ walking and cycling community.
 
 **YouTube video (unlisted):** _paste your link here_
 
-**CI/CD green build:** _paste your screenshot here_ (`<img width="956" height="437" alt="image" src="https://github.com/user-attachments/assets/64c154f5-0e1a-43d6-a5b8-338bf924e57b" />
+**CI/CD green build:** _paste your screenshot here_ ("<img width="928" height="451" alt="image" src="https://github.com/user-attachments/assets/afbe8bce-5ac3-4a19-9311-616e777d3ff0" />
+" />
 `)
 
 ---
