@@ -1,0 +1,33 @@
+# Optional: runs SQL Server + the API + the MVC app together with one command:
+#   docker compose up --build        (then open http://localhost:8090)
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${SA_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q \"SELECT 1\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  api:
+    build: ./RaceDayAPI/RaceDayAPI
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=RaceDayDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;"
+      AzureBlob__ConnectionString: ${AZURE_STORAGE_CONNECTION_STRING}
+    ports:
+      - "5080:8080"
+
+  web:
+    build: ./RaceDayWeb
+    depends_on:
+      - api
+    environment:
+      ApiSettings__BaseUrl: "http://api:8080/"
+    ports:
+      - "8090:8080"

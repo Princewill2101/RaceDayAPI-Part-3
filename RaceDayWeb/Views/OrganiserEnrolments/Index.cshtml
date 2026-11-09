@@ -1,0 +1,37 @@
+@model EnrolmentsPageViewModel
+@{ ViewData["Title"] = "Enrolments - " + Model.Event.Name; }
+
+<a asp-controller="ManageEvents" asp-action="Index" class="rd-back"><i class="bi bi-arrow-left"></i> My events</a>
+<h1 class="rd-title mt-2">Enrolments</h1>
+<p class="lead mb-3">@Model.Event.Name &middot; @Model.Event.EventDate.ToString("d MMM yyyy") &middot; <strong>@Model.Enrolments.Count</strong> entered</p>
+<partial name="_LoadError" />
+
+@if (!Model.Enrolments.Any())
+{
+    <div class="rd-card text-center py-5">
+        <i class="bi bi-people rd-icon-lg"></i>
+        <h3>Nobody has entered yet</h3>
+    </div>
+}
+else
+{
+    <div class="rd-card p-0 table-responsive">
+        <table class="table rd-table mb-0 align-middle">
+            <thead><tr><th>#</th><th>Participant</th><th>Category</th><th>Entered on</th><th>Status</th></tr></thead>
+            <tbody>
+            @{ int n = 0; }
+            @foreach (var e in Model.Enrolments)
+            {
+                n++;
+                <tr>
+                    <td>@n</td>
+                    <td><strong>@e.ParticipantName</strong></td>
+                    <td>@e.CategoryName</td>
+                    <td>@e.EnrolmentDate.ToLocalTime().ToString("d MMM yyyy, HH:mm")</td>
+                    <td><span class="badge @DisplayHelpers.StatusClass(e.Status)">@e.Status</span></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

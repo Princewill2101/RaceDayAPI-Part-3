@@ -1,0 +1,58 @@
+@model ResultsEntryPageViewModel
+@{ ViewData["Title"] = "Results - " + Model.Event.Name; }
+
+<a asp-controller="ManageEvents" asp-action="Index" class="rd-back"><i class="bi bi-arrow-left"></i> My events</a>
+<h1 class="rd-title mt-2">Capture results</h1>
+<p class="lead mb-3">@Model.Event.Name &middot; @Model.Event.EventDate.ToString("d MMM yyyy")</p>
+<partial name="_LoadError" />
+
+@if (Model.Event.EventDate > DateTime.Now)
+{
+    <div class="alert alert-warning"><i class="bi bi-hourglass-split"></i> This event hasn't happened yet. Results are normally captured after it concludes.</div>
+}
+
+@if (!Model.Enrolments.Any())
+{
+    <div class="rd-card text-center py-5">
+        <i class="bi bi-people rd-icon-lg"></i>
+        <h3>No participants to record results for</h3>
+    </div>
+}
+else
+{
+    <div class="rd-card p-0 table-responsive">
+        <table class="table rd-table mb-0 align-middle">
+            <thead><tr><th>Participant</th><th>Category</th><th>Status</th><th style="min-width:340px">Result</th></tr></thead>
+            <tbody>
+            @foreach (var e in Model.Enrolments)
+            {
+                <tr>
+                    <td><strong>@e.ParticipantName</strong></td>
+                    <td>@e.CategoryName</td>
+                    <td><span class="badge @DisplayHelpers.StatusClass(e.Status)">@e.Status</span></td>
+                    <td>
+                        @if (e.HasResult)
+                        {
+                            <span class="badge status-confirmed"><i class="bi bi-check2-circle"></i> Result recorded</span>
+                        }
+                        else if (e.Status == "Cancelled")
+                        {
+                            <span class="text-muted">Cancelled entry</span>
+                        }
+                        else
+                        {
+                            <form asp-action="Record" method="post" class="row g-1 align-items-center">
+                                <input type="hidden" name="EventId" value="@Model.Event.EventId" />
+                                <input type="hidden" name="EnrolmentId" value="@e.EnrolmentId" />
+                                <div class="col-5"><input name="FinishTime" class="form-control form-control-sm rd-mono" placeholder="hh:mm:ss" aria-label="Finish time" /></div>
+                                <div class="col-3"><input name="FinishPosition" type="number" min="1" class="form-control form-control-sm" placeholder="Pos." aria-label="Finish position" /></div>
+                                <div class="col-4 d-grid"><button type="submit" class="btn btn-sm btn-rd">Publish</button></div>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

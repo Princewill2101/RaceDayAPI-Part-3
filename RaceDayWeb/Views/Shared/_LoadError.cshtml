@@ -1,0 +1,4 @@
+@if (ViewBag.LoadError is string loadError && !string.IsNullOrEmpty(loadError))
+{
+    <div class="alert alert-danger" role="alert"><i class="bi bi-exclamation-triangle"></i> @loadError</div>
+}

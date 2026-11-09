@@ -1,0 +1,50 @@
+@model DashboardViewModel
+@{ ViewData["Title"] = "Dashboard"; }
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <h1 class="rd-title mb-0">Organiser dashboard</h1>
+    <a class="btn btn-rd" asp-controller="ManageEvents" asp-action="Create"><i class="bi bi-plus-circle"></i> New event</a>
+</div>
+<partial name="_LoadError" />
+
+<div class="row g-3 my-3">
+    <div class="col-md-4"><div class="rd-stat-big"><span>@Model.Events.Count</span><small>Events created</small></div></div>
+    <div class="col-md-4"><div class="rd-stat-big"><span>@Model.UpcomingCount</span><small>Upcoming events</small></div></div>
+    <div class="col-md-4"><div class="rd-stat-big"><span>@Model.TotalEnrolments</span><small>Total enrolments</small></div></div>
+</div>
+
+@if (!Model.Events.Any())
+{
+    <div class="rd-card text-center py-5">
+        <i class="bi bi-flag rd-icon-lg"></i>
+        <h3>You haven't created an event yet</h3>
+        <a class="btn btn-rd mt-2" asp-controller="ManageEvents" asp-action="Create">Create your first event</a>
+    </div>
+}
+else
+{
+    <div class="rd-card p-0 table-responsive">
+        <table class="table rd-table mb-0 align-middle">
+            <thead><tr><th>Event</th><th>Date</th><th>Type</th><th class="text-center">Enrolments</th><th></th></tr></thead>
+            <tbody>
+            @foreach (var e in Model.Events)
+            {
+                bool past = e.EventDate < DateTime.Now;
+                <tr>
+                    <td><strong>@e.Name</strong><br /><small class="text-muted">@e.Location</small></td>
+                    <td>@e.EventDate.ToString("d MMM yyyy, HH:mm") @if (past) { <span class="badge bg-secondary">Past</span> }</td>
+                    <td><span class="badge rd-type-badge">@e.EventType</span></td>
+                    <td class="text-center"><span class="rd-count">@e.EnrolmentCount</span></td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-rd" asp-controller="OrganiserEnrolments" asp-action="Index" asp-route-eventId="@e.EventId">Enrolments</a>
+                        @if (past)
+                        {
+                            <a class="btn btn-sm btn-rd" asp-controller="ResultsEntry" asp-action="Index" asp-route-eventId="@e.EventId">Results</a>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

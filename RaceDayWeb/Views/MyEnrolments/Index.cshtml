@@ -1,0 +1,33 @@
+@model List<EnrolmentDto>
+@{ ViewData["Title"] = "My enrolments"; }
+
+<h1 class="rd-title">My enrolments</h1>
+<partial name="_LoadError" />
+
+@if (!Model.Any())
+{
+    <div class="rd-card text-center py-5">
+        <i class="bi bi-ticket-perforated rd-icon-lg"></i>
+        <h3>You haven't entered any events yet</h3>
+        <a class="btn btn-rd mt-2" asp-controller="Events" asp-action="Index">Find an event</a>
+    </div>
+}
+else
+{
+    <div class="rd-card p-0 table-responsive">
+        <table class="table rd-table mb-0 align-middle">
+            <thead><tr><th>Event</th><th>Category</th><th>Entered on</th><th>Status</th></tr></thead>
+            <tbody>
+            @foreach (var e in Model)
+            {
+                <tr>
+                    <td><a asp-controller="Events" asp-action="Details" asp-route-id="@e.EventId">@e.EventName</a></td>
+                    <td>@e.CategoryName</td>
+                    <td>@e.EnrolmentDate.ToLocalTime().ToString("d MMM yyyy")</td>
+                    <td><span class="badge @DisplayHelpers.StatusClass(e.Status)">@e.Status</span></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

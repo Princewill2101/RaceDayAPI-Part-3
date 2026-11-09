@@ -1,0 +1,8 @@
+@{ ViewData["Title"] = "Access denied"; }
+
+<div class="rd-card text-center py-5">
+    <i class="bi bi-slash-circle rd-icon-lg"></i>
+    <h1>This page isn't for your role</h1>
+    <p class="lead">You're logged in, but this area is only available to a different type of account.</p>
+    <a class="btn btn-rd" asp-controller="Home" asp-action="Index">Go to my home page</a>
+</div>

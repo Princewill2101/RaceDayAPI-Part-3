@@ -1,0 +1,28 @@
+@{ ViewData["Title"] = "Welcome"; }
+
+<section class="rd-hero">
+    <h1>Every start line.<br /><span>One place.</span></h1>
+    <p class="lead">Find your next run, walk or cycle across South Africa - enter in seconds, then track every finish.</p>
+    <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-rd btn-lg" asp-controller="Account" asp-action="Register">Create a free account</a>
+        <a class="btn btn-outline-light btn-lg" asp-controller="Account" asp-action="Login">Log in</a>
+    </div>
+</section>
+
+<div class="row g-4 mt-1">
+    <div class="col-md-4">
+        <div class="rd-card h-100"><i class="bi bi-compass rd-icon"></i>
+            <h3>For participants</h3>
+            <p>Browse upcoming events, enter under your category and keep a personal race history.</p></div>
+    </div>
+    <div class="col-md-4">
+        <div class="rd-card h-100"><i class="bi bi-flag rd-icon"></i>
+            <h3>For organisers</h3>
+            <p>Create events and categories, see who has entered and publish finish times.</p></div>
+    </div>
+    <div class="col-md-4">
+        <div class="rd-card h-100"><i class="bi bi-stopwatch rd-icon"></i>
+            <h3>Track your progress</h3>
+            <p>Every finish time and position in one place, ready for your next personal best.</p></div>
+    </div>
+</div>

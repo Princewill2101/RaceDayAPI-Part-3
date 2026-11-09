@@ -1,0 +1,34 @@
+@model List<ResultDto>
+@{ ViewData["Title"] = "My results"; }
+
+<h1 class="rd-title">My results</h1>
+<partial name="_LoadError" />
+
+@if (!Model.Any())
+{
+    <div class="rd-card text-center py-5">
+        <i class="bi bi-stopwatch rd-icon-lg"></i>
+        <h3>No results yet</h3>
+        <p class="mb-0">Your results appear here after an organiser records them for events you've entered.</p>
+    </div>
+}
+else
+{
+    <div class="rd-card p-0 table-responsive">
+        <table class="table rd-table mb-0 align-middle">
+            <thead><tr><th>Event</th><th>Date</th><th>Category</th><th>Finish time</th><th>Position</th></tr></thead>
+            <tbody>
+            @foreach (var r in Model)
+            {
+                <tr>
+                    <td><strong>@r.EventName</strong></td>
+                    <td>@r.EventDate.ToString("d MMM yyyy")</td>
+                    <td>@r.CategoryName</td>
+                    <td class="rd-mono">@DisplayHelpers.FinishTimeText(r.FinishTime)</td>
+                    <td>@DisplayHelpers.PositionText(r.FinishPosition, r.TotalFinishers)</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
