@@ -9,7 +9,7 @@ walking and cycling community.
 | 2 | RESTful API (ASP.NET Core Web API, EF Core, SQL Server, xUnit) | `RaceDayAPI/` |
 | 3 | MVC web app, Azure Blob Storage, Docker, CI/CD | `RaceDayWeb/` |
 
-**YouTube video (unlisted):** _paste your li_
+**YouTube video (unlisted):** _paste your l_
 
 **CI/CD green build:** _paste your screenshot here_ ("<img width="928" height="451" alt="image" src="https://github.com/user-attachments/assets/afbe8bce-5ac3-4a19-9311-616e777d3ff0" />
 " />
