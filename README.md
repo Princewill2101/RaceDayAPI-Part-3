@@ -109,4 +109,4 @@ Open http://localhost:8090. On Linux add `--add-host=host.docker.internal:host-g
 
 ## AI usage disclosure
 
-_Write your own disclosure here, as required by the assignment (what tools you used and for what)._
+I used claude ai to find out how to do doca 
